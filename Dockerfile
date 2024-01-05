@@ -1,13 +1,15 @@
+# change if you need a different node version
 ARG NODE_VERSION=18
 FROM n8nio/base:${NODE_VERSION}
 
+# change to your desired n8n version
 ARG N8N_VERSION="1.21.1"
 RUN if [ -z "$N8N_VERSION" ] ; then echo "The N8N_VERSION argument is missing!" ; exit 1; fi
 
 ENV N8N_VERSION=${N8N_VERSION}
 ENV NODE_ENV=production
 ENV N8N_RELEASE_TYPE=stable
-# 環境変数の設定
+# change variables to your postgresdb settings in cloudrun variables
 ENV DB_TYPE=postgresdb
 ENV DB_POSTGRESDB_DATABASE=xxx
 ENV DB_POSTGRESDB_HOST=xxx
