@@ -3,7 +3,8 @@ ARG NODE_VERSION=18
 FROM n8nio/base:${NODE_VERSION}
 
 # change to your desired n8n version
-ARG N8N_VERSION="1.21.1"
+ARG N8N_VERSION="1.23.0"
+EXPOSE 5678
 RUN if [ -z "$N8N_VERSION" ] ; then echo "The N8N_VERSION argument is missing!" ; exit 1; fi
 
 ENV N8N_VERSION=${N8N_VERSION}
@@ -17,6 +18,7 @@ ENV DB_POSTGRESDB_PORT=xxx
 ENV DB_POSTGRESDB_USER=xxx
 ENV DB_POSTGRESDB_SCHEMA=xxx
 ENV DB_POSTGRESDB_PASSWORD=xxx
+ENV N8N_ENCRYPTION_KEY=xxx
 
 RUN set -eux; \
 	apkArch="$(apk --print-arch)"; \
@@ -41,5 +43,4 @@ RUN \
 	chown node:node .n8n
 USER node
 
-EXPOSE 5678
 ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
