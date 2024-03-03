@@ -2,7 +2,11 @@
 ARG NODE_VERSION=18
 
 FROM alpine AS litestream-builer
-ADD https://github.com/benbjohnson/litestream/releases/download/v0.3.13/litestream-v0.3.13-linux-arm64.tar.gz /tmp/litestream.tar.gz
+# change to your desired litestream version
+ARG LITESTREAM_VERSION=0.3.13
+
+ENV LITESTREAM_VERSION=${LITESTREAM_VERSION}
+ADD "https://github.com/benbjohnson/litestream/releases/download/v${LITESTREAM_VERSION}/litestream-v${LITESTREAM_VERSION}-linux-amd64.tar.gz" /tmp/litestream.tar.gz
 RUN tar -C /usr/local/bin -xzf /tmp/litestream.tar.gz
 
 FROM n8nio/base:${NODE_VERSION}
@@ -40,10 +44,13 @@ RUN chmod +x /docker-entrypoint.sh
 RUN chmod +x /etc/litestream.yml
 RUN chmod +x /usr/local/bin/litestream
 
+RUN apk add bash
 
 RUN \
 	mkdir .n8n && \
+	chmod +x .n8n && \
 	chown node:node .n8n
 USER node
 
-ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
