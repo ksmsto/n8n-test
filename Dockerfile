@@ -6,9 +6,6 @@ ADD https://github.com/benbjohnson/litestream/releases/download/v0.3.13/litestre
 RUN tar -C /usr/local/bin -xzf /tmp/litestream.tar.gz
 
 FROM n8nio/base:${NODE_VERSION}
-# copy the litestream binary from the previous stage
-COPY --from=litestream-builer /usr/local/bin/litestream /usr/local/bin/litestream
-
 # change to your desired n8n version
 ARG N8N_VERSION="1.29.1"
 EXPOSE 5678
@@ -17,6 +14,7 @@ RUN if [ -z "$N8N_VERSION" ] ; then echo "The N8N_VERSION argument is missing!" 
 ENV N8N_VERSION=${N8N_VERSION}
 ENV NODE_ENV=production
 ENV N8N_RELEASE_TYPE=stable
+ENV GCS_BUCKET_URL=xxx
 ENV N8N_ENCRYPTION_KEY=xxx
 
 RUN set -eux; \
@@ -35,7 +33,13 @@ RUN set -eux; \
 	rm -rf /root/.npm
 
 COPY docker-entrypoint.sh /
+# copy the litestream binary from the previous stage
+COPY --from=litestream-builer /usr/local/bin/litestream /usr/local/bin/litestream
+COPY litestream.yml /etc/litestream.yml
 RUN chmod +x /docker-entrypoint.sh
+RUN chmod +x /etc/litestream.yml
+RUN chmod +x /usr/local/bin/litestream
+
 
 RUN \
 	mkdir .n8n && \
