@@ -20,6 +20,20 @@ ENV NODE_ENV=production
 ENV N8N_RELEASE_TYPE=stable
 ENV GCS_BUCKET_URL=xxx
 ENV N8N_ENCRYPTION_KEY=xxx
+# max age, in hours, of the data of the executions
+ENV EXECUTIONS_DATA_MAX_AGE=72
+# whether to share the telemetry data with the n8n team 
+ENV N8N_DIAGNOSTICS_ENABLED=false
+# n8n base url (custom domain)
+ENV N8N_EDITOR_BASE_URL=https://localhost:5678
+# personalization for new users
+ENV N8N_PERSONALIZATION_ENABLED=false
+# display the hiring banner
+ENV N8N_HIRING_BANNER_ENABLED=false
+# when the workflow is success, the data won't be saved to the database
+ENV EXECUTIONS_DATA_SAVE_ON_SUCCESS=false
+# prune past executions data
+ENV EXECUTIONS_DATA_PRUNE=true
 
 RUN set -eux; \
 	apkArch="$(apk --print-arch)"; \
