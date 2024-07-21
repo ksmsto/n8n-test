@@ -1,5 +1,5 @@
 # change if you need a different node version
-ARG NODE_VERSION=18
+ARG NODE_VERSION=22
 
 FROM alpine AS litestream-builer
 # change to your desired litestream version
@@ -11,7 +11,7 @@ RUN tar -C /usr/local/bin -xzf /tmp/litestream.tar.gz
 
 FROM n8nio/base:${NODE_VERSION}
 # change to your desired n8n version
-ARG N8N_VERSION="1.29.1"
+ARG N8N_VERSION="1.50.1"
 EXPOSE 5678
 RUN if [ -z "$N8N_VERSION" ] ; then echo "The N8N_VERSION argument is missing!" ; exit 1; fi
 
