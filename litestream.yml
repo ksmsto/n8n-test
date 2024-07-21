@@ -1,0 +1,4 @@
+dbs:
+  - path: .n8n/database.sqlite
+    replicas:
+      - url: ${GCS_BUCKET_URL}
