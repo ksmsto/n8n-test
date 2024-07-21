@@ -31,7 +31,7 @@ ENV N8N_PERSONALIZATION_ENABLED=false
 # display the hiring banner
 ENV N8N_HIRING_BANNER_ENABLED=false
 # when the workflow is success, the data won't be saved to the database
-ENV EXECUTIONS_DATA_SAVE_ON_SUCCESS=false
+ENV EXECUTIONS_DATA_SAVE_ON_SUCCESS=none
 # prune past executions data
 ENV EXECUTIONS_DATA_PRUNE=true
 
